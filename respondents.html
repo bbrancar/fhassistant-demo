@@ -98,10 +98,12 @@
 <div id="setup-backdrop" class="modal-backdrop hidden">
   <div class="modal">
     <h2>Demo setup</h2>
-    <p>Paste the demo access key you were given for the training session. It is stored only in this
-       browser and sent only to the AI service when you run a report — never to this website's host.</p>
+    <p>Paste the demo access key you were given for the training session — an Anthropic key
+       (<code>sk-ant-…</code>) or an OpenAI key (<code>sk-…</code>); the module detects which.
+       It is stored only in this browser and sent only to the AI service when you run a report —
+       never to this website's host.</p>
     <label>Access key
-      <input type="password" id="setup-key" placeholder="sk-ant-…">
+      <input type="password" id="setup-key" placeholder="sk-ant-… or sk-…">
     </label>
     <div class="form-actions">
       <button class="primary inline" type="button" onclick="saveSetup()">Save</button>

@@ -33,11 +33,17 @@ sent to the page's host.
 Recommended: create a dedicated API key in the Anthropic Console with a low
 monthly spend limit for the training, and revoke it afterward.
 
-Model: `claude-opus-5` (see the top of `respondents.js`). Each report run
-costs on the order of a few cents. `effort` is set to `"medium"` for snappy
-live responses; raise it to `"high"` for deeper reports. Server-side refusal
-fallbacks are enabled so a safety-classifier decline re-routes automatically
-instead of stalling the demo.
+The key's prefix picks the provider: `sk-ant-…` calls Anthropic
+(`claude-opus-5`), any other `sk-…` key calls OpenAI (`gpt-5`) — model IDs at
+the top of `respondents.js`. Each report run costs on the order of a few
+cents. Effort is tuned low/medium for snappy live responses; raise it in
+`respondents.js` for deeper reports. On the Anthropic path, server-side
+refusal fallbacks are enabled so a safety-classifier decline re-routes
+automatically instead of stalling the demo.
+
+Note: the account behind the key needs credits — as of Sep 15 the FH OpenAI
+key is valid but has a zero credit balance (top up at
+platform.openai.com → Billing before rehearsing on it).
 
 ## Rehearsal checklist
 

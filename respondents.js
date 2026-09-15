@@ -1,11 +1,15 @@
 /* FHAssistant demo — Identify Respondents and Key Records Collection.
  *
- * Static-hosting constraint: there is no backend, so the page calls the
- * Claude API directly from the presenter's browser. The access key is pasted
+ * Static-hosting constraint: there is no backend, so the page calls the AI
+ * API (Anthropic or OpenAI, chosen by the pasted key's prefix) directly from
+ * the presenter's browser. The access key is pasted
  * once via "Demo setup", lives in this browser's localStorage only, and is
  * never present in this repository. */
 
-var MODEL = "claude-opus-5";
+/* Provider is chosen by the pasted key's prefix: "sk-ant-…" calls Anthropic,
+ * any other "sk-…" key calls OpenAI. */
+var ANTHROPIC_MODEL = "claude-opus-5";
+var OPENAI_MODEL = "gpt-5";
 var KEY_STORAGE = "fha_demo_key";
 
 var SYSTEM_PROMPT = `You are FHAssistant, an investigation-support assistant for fair housing investigators, built by fair housing advocates. This deployment is the "Identify Respondents and Key Records Collection" module, running in a DEMONSTRATION environment for a national training of fair housing investigators.
@@ -97,7 +101,13 @@ function saveSetup() {
   }
 }
 
-/* ---------- Claude API (streaming) ---------- */
+/* ---------- Model APIs (streaming; provider chosen by key prefix) ---------- */
+
+function callModel(messages, handlers) {
+  return getKey().indexOf("sk-ant-") === 0
+    ? callAnthropic(messages, handlers)
+    : callOpenAI(messages, handlers);
+}
 
 function friendlyHttpError(status, detail) {
   if (status === 401) return "The access key was rejected. Open Demo setup (top right) and re-enter it.";
@@ -106,7 +116,7 @@ function friendlyHttpError(status, detail) {
   return "Request failed (" + status + ")" + (detail ? ": " + detail : ".");
 }
 
-async function callClaude(messages, handlers) {
+async function callAnthropic(messages, handlers) {
   var res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
@@ -120,7 +130,7 @@ async function callClaude(messages, handlers) {
       "anthropic-dangerous-direct-browser-access": "true",
     },
     body: JSON.stringify({
-      model: MODEL,
+      model: ANTHROPIC_MODEL,
       // Hard cap on per-turn spend during a live demo.
       max_tokens: 16000,
       // Latency tuning for a live audience; raise to "high" for deeper reports.
@@ -167,6 +177,70 @@ async function callClaude(messages, handlers) {
         stopReason = ev.delta.stop_reason;
       } else if (ev.type === "error") {
         throw new Error("The AI service reported an error: " + ((ev.error && ev.error.message) || "unknown") + ". Try again.");
+      }
+    }
+  }
+  return stopReason;
+}
+
+async function callOpenAI(messages, handlers) {
+  // Reasoning models produce nothing visible while they think.
+  handlers.onThinking();
+  var res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + getKey(),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model: OPENAI_MODEL,
+      // Hard cap on per-turn spend during a live demo (includes reasoning).
+      max_completion_tokens: 16000,
+      // Latency tuning for a live audience; raise to "medium" for deeper reports.
+      reasoning_effort: "low",
+      stream: true,
+      messages: [{ role: "system", content: SYSTEM_PROMPT }].concat(messages),
+    }),
+  });
+
+  if (!res.ok) {
+    var detail = "";
+    try {
+      var j = await res.json();
+      detail = (j.error && j.error.message) || "";
+    } catch (e) { /* non-JSON error body */ }
+    throw new Error(friendlyHttpError(res.status, detail));
+  }
+
+  var reader = res.body.getReader();
+  var decoder = new TextDecoder();
+  var buf = "";
+  var stopReason = null;
+
+  for (;;) {
+    var chunk = await reader.read();
+    if (chunk.done) break;
+    buf += decoder.decode(chunk.value, { stream: true });
+    var nl;
+    while ((nl = buf.indexOf("\n")) >= 0) {
+      var line = buf.slice(0, nl).replace(/\r$/, "");
+      buf = buf.slice(nl + 1);
+      if (line.indexOf("data:") !== 0) continue;
+      var payload = line.slice(5).trim();
+      if (!payload || payload === "[DONE]") continue;
+      var ev;
+      try { ev = JSON.parse(payload); } catch (e) { continue; }
+      if (ev.error) {
+        throw new Error("The AI service reported an error: " + (ev.error.message || "unknown") + ". Try again.");
+      }
+      var choice = ev.choices && ev.choices[0];
+      if (!choice) continue;
+      if (choice.delta && choice.delta.content) handlers.onText(choice.delta.content);
+      if (choice.finish_reason) {
+        // Map to the Anthropic-style values streamTurn() already handles.
+        stopReason = choice.finish_reason === "length" ? "max_tokens"
+          : choice.finish_reason === "content_filter" ? "refusal"
+          : "end_turn";
       }
     }
   }
@@ -339,7 +413,7 @@ async function streamTurn() {
   var el = addAssistantMsg();
   var text = "";
   try {
-    var stopReason = await callClaude(conversation, {
+    var stopReason = await callModel(conversation, {
       onThinking: function () { el.status.textContent = "FHAssistant is analyzing the case…"; },
       onText: function (t) {
         if (!text) el.status.classList.add("hidden");
