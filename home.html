@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FHAssistant — Home</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e4d6b' d='M12 3l9 8h-3v9h-4v-6h-4v6H6v-9H3z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="home.html">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l9-8 9 8"/>
+          <path d="M5 10v10h14V10"/>
+          <path d="M10 20v-6h4v6"/>
+        </svg>
+      </span>
+      FHAssistant
+    </a>
+    <div class="nav-user">
+      <span class="avatar" aria-hidden="true">FH</span>
+      <span>Investigator</span>
+      <a href="index.html">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Welcome to FHAssistant</h1>
+  <p class="sub">A tool for fair housing advocates, by fair housing advocates.</p>
+  <p class="ask">How can we help you today?</p>
+</section>
+
+<section class="grid">
+  <button class="module" type="button" onclick="notEnabled()">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="8" y="3" width="8" height="4" rx="1"/>
+        <path d="M16 5h3v16H5V5h3"/>
+        <path d="M9 11h6M9 15h6"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Conduct New Complainant Intake</h2>
+      <p>Guided interview to capture a new complainant's story, parties, and timeline.</p>
+    </span>
+  </button>
+
+  <button class="module" type="button" onclick="notEnabled()">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Collect Key Complainant's Records</h2>
+      <p>Build a checklist and request letters for the complainant's key documents.</p>
+    </span>
+  </button>
+
+  <a class="module" id="respondents-link" href="#" target="_blank" rel="noopener">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/>
+        <path d="M8 8h2M8 12h2"/>
+        <circle cx="17" cy="15" r="3.5"/>
+        <path d="M19.5 17.5L22 20"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Identify Respondents and Key Records Collection</h2>
+      <p>Property owner and operator research, with a public-records collection plan.</p>
+    </span>
+  </a>
+
+  <button class="module" type="button" onclick="notEnabled()">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="8" r="3"/>
+        <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/>
+        <circle cx="17.5" cy="9.5" r="2.5"/>
+        <path d="M16 14.5c2.8.3 5 2.7 5 5.5"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Identify, Contact, and Interview Witnesses</h2>
+      <p>Find likely witnesses and generate outreach scripts and interview guides.</p>
+    </span>
+  </button>
+
+  <button class="module" type="button" onclick="notEnabled()">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 5h11M9 12h11M9 19h11"/>
+        <path d="M4 5l1 1 2-2M4 12l1 1 2-2M4 19l1 1 2-2"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Generate Investigation Plans</h2>
+      <p>Turn the complaint into a structured, reviewable investigation plan.</p>
+    </span>
+  </button>
+
+  <button class="module" type="button" onclick="notEnabled()">
+    <span class="icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/>
+        <path d="M14 3v5h5"/>
+        <path d="M9 13h6M9 17h6"/>
+      </svg>
+    </span>
+    <span>
+      <h2>Generate Administrative Complaints</h2>
+      <p>Draft an administrative complaint ready for supervisor review.</p>
+    </span>
+  </button>
+</section>
+
+<p class="page-foot">Demonstration environment — do not enter real case information.</p>
+
+<div id="toast" role="status"></div>
+
+<script>
+  // Replace with the FHAssistant Custom GPT link before the training session.
+  var RESPONDENTS_GPT_URL = "https://chatgpt.com/";
+
+  document.getElementById('respondents-link').href = RESPONDENTS_GPT_URL;
+
+  var toastTimer;
+  function notEnabled() {
+    var t = document.getElementById('toast');
+    t.textContent = 'This module is not enabled in the demonstration build.';
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2600);
+  }
+</script>
+</body>
+</html>
