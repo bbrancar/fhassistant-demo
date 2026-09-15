@@ -41,9 +41,8 @@ cents. Effort is tuned low/medium for snappy live responses; raise it in
 refusal fallbacks are enabled so a safety-classifier decline re-routes
 automatically instead of stalling the demo.
 
-Note: the account behind the key needs credits — as of Sep 15 the FH OpenAI
-key is valid but has a zero credit balance (top up at
-platform.openai.com → Billing before rehearsing on it).
+Note: the account behind the key needs a positive credit balance — a
+zero-balance key fails every run with an "insufficient quota" error.
 
 ## Rehearsal checklist
 
