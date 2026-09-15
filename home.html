@@ -61,7 +61,7 @@
     </span>
   </button>
 
-  <a class="module" id="respondents-link" href="#" target="_blank" rel="noopener">
+  <a class="module" href="respondents.html">
     <span class="icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/>
@@ -124,11 +124,6 @@
 <div id="toast" role="status"></div>
 
 <script>
-  // Replace with the FHAssistant Custom GPT link before the training session.
-  var RESPONDENTS_GPT_URL = "https://chatgpt.com/";
-
-  document.getElementById('respondents-link').href = RESPONDENTS_GPT_URL;
-
   var toastTimer;
   function notEnabled() {
     var t = document.getElementById('toast');

@@ -20,6 +20,7 @@ body {
   line-height: 1.5;
 }
 a { color: var(--primary); }
+.hidden { display: none !important; }
 
 /* ---------- Login ---------- */
 .login-wrap {
@@ -70,7 +71,7 @@ form label {
   color: var(--navy);
   margin-bottom: 16px;
 }
-form input {
+form input, form textarea {
   display: block;
   width: 100%;
   margin-top: 6px;
@@ -81,7 +82,8 @@ form input {
   background: #fbfcfd;
   font-family: inherit;
 }
-form input:focus {
+form textarea { font-size: 14.5px; resize: vertical; min-height: 64px; }
+form input:focus, form textarea:focus {
   outline: 2px solid var(--primary);
   outline-offset: 1px;
   border-color: var(--primary);
@@ -99,6 +101,24 @@ button.primary {
   cursor: pointer;
 }
 button.primary:hover { background: var(--primary-dark); }
+button.primary:focus-visible, button.secondary:focus-visible, .chip:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+button.primary.inline { width: auto; padding: 11px 20px; font-size: 14px; }
+button.secondary {
+  padding: 11px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+}
+button.secondary:hover { border-color: var(--primary); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
 .aux { margin-top: 18px; text-align: center; font-size: 13px; color: var(--muted); }
 .aux a { text-decoration: none; }
 .foot { font-size: 12.5px; color: var(--muted); text-align: center; }
@@ -125,7 +145,19 @@ button.primary:hover { background: var(--primary-dark); }
 .nav-brand .logo { width: 34px; height: 34px; border-radius: 9px; margin: 0; }
 .nav-brand .logo svg { width: 20px; height: 20px; }
 .nav-user { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--muted); }
-.nav-user a { text-decoration: none; font-weight: 600; }
+.nav-user a { text-decoration: none; font-weight: 600; cursor: pointer; }
+.nav-user button.gear {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  font-family: inherit;
+  cursor: pointer;
+}
+.nav-user button.gear:hover { border-color: var(--primary); }
 .avatar {
   width: 32px;
   height: 32px;
@@ -172,6 +204,7 @@ button.primary:hover { background: var(--primary-dark); }
   box-shadow: 0 6px 18px rgba(22, 50, 74, 0.1);
   transform: translateY(-1px);
 }
+.module:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 .module .icon {
   flex: none;
   width: 42px;
@@ -210,3 +243,119 @@ button.primary:hover { background: var(--primary-dark); }
   transition: opacity 0.25s, transform 0.25s;
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ---------- Module page ---------- */
+.page { max-width: 1080px; margin: 0 auto; padding: 32px 24px 48px; }
+.crumb { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+.crumb a { text-decoration: none; }
+.page-head { margin-bottom: 20px; }
+.page-head h1 { font-size: 24px; color: var(--navy); letter-spacing: -0.02em; }
+.page-head p { color: var(--muted); margin-top: 4px; font-size: 14.5px; max-width: 70ch; }
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.panel > h2 { font-size: 16px; color: var(--navy); margin-bottom: 14px; }
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px 18px;
+}
+.form-grid label { margin-bottom: 0; }
+.form-grid .wide { grid-column: 1 / -1; }
+.form-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; align-items: center; }
+
+/* ---------- Chat ---------- */
+.chat { display: flex; flex-direction: column; gap: 14px; }
+.msg { border-radius: var(--radius); padding: 16px 18px; font-size: 14.5px; }
+.msg .who {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.msg.user { background: #e7eef4; border: 1px solid #d3e0ea; }
+.msg.user .body { white-space: pre-wrap; }
+.msg.assistant { background: var(--card); border: 1px solid var(--line); }
+.status-line { color: var(--muted); font-size: 13.5px; font-style: italic; }
+
+.followup-label { font-size: 13px; font-weight: 700; color: var(--navy); margin: 4px 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--navy);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+.followup { display: flex; gap: 10px; margin-top: 14px; }
+.followup input { flex: 1; margin-top: 0; }
+.error-box {
+  background: #fdf1f0;
+  border: 1px solid #f0cfcb;
+  color: #8a2f25;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+/* ---------- Markdown output ---------- */
+.md h1, .md h2, .md h3, .md h4 { color: var(--navy); margin: 16px 0 8px; line-height: 1.3; }
+.md h1 { font-size: 19px; }
+.md h2 { font-size: 17px; }
+.md h3 { font-size: 15.5px; }
+.md h4 { font-size: 14.5px; }
+.md > :first-child { margin-top: 0; }
+.md p { margin: 8px 0; }
+.md ul, .md ol { margin: 8px 0 8px 22px; }
+.md li { margin: 3px 0; }
+.md .table-wrap { overflow-x: auto; margin: 10px 0; }
+.md table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.md th, .md td { border: 1px solid var(--line); padding: 6px 10px; text-align: left; vertical-align: top; }
+.md th { background: #eef3f7; color: var(--navy); }
+.md code { background: #eef3f7; border-radius: 4px; padding: 1px 5px; font-size: 13px; }
+.md pre {
+  background: #f3f6f9;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  margin: 10px 0;
+}
+.md pre code { background: none; padding: 0; font-size: 13px; white-space: pre-wrap; }
+.md blockquote { border-left: 3px solid var(--line); margin: 8px 0; padding: 2px 12px; color: var(--muted); }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 14px 0; }
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 50, 74, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 50;
+}
+.modal {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 18px 50px rgba(22, 50, 74, 0.25);
+}
+.modal h2 { color: var(--navy); font-size: 18px; margin-bottom: 8px; }
+.modal p { font-size: 13.5px; color: var(--muted); margin-bottom: 14px; }
+.modal .form-actions { margin-top: 4px; }

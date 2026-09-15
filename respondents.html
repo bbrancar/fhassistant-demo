@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FHAssistant — Identify Respondents</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e4d6b' d='M12 3l9 8h-3v9h-4v-6h-4v6H6v-9H3z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="home.html">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 11l9-8 9 8"/>
+          <path d="M5 10v10h14V10"/>
+          <path d="M10 20v-6h4v6"/>
+        </svg>
+      </span>
+      FHAssistant
+    </a>
+    <div class="nav-user">
+      <button class="gear" type="button" onclick="openSetup()">Demo setup</button>
+      <span class="avatar" aria-hidden="true">FH</span>
+      <span>Investigator</span>
+      <a href="index.html">Sign out</a>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+  <div class="page-head">
+    <p class="crumb"><a href="home.html">Home</a> / Identify Respondents and Key Records Collection</p>
+    <h1>Identify Respondents and Key Records Collection</h1>
+    <p>Enter the intake details below and FHAssistant will prepare the property owner and operator
+       information report, identify likely respondents, and build a public-records collection plan.</p>
+  </div>
+
+  <section class="panel">
+    <h2>Case intake</h2>
+    <form id="intake-form" novalidate autocomplete="off">
+      <div class="form-grid">
+        <label>Case number
+          <input type="text" id="f-case" placeholder="FH-2026-0000">
+        </label>
+        <label>Complainant
+          <input type="text" id="f-complainant" placeholder="Name">
+        </label>
+        <label class="wide">Subject property (address)
+          <input type="text" id="f-property" placeholder="Street, city, state, ZIP">
+        </label>
+        <label>Property type / size
+          <input type="text" id="f-type" placeholder="e.g. 48-unit apartment complex">
+        </label>
+        <label>Known owner
+          <input type="text" id="f-owner" placeholder="Person or entity, if known">
+        </label>
+        <label>Known operator / property manager
+          <input type="text" id="f-operator" placeholder="Management company, on-site staff">
+        </label>
+        <label>Other known parties
+          <input type="text" id="f-parties" placeholder="Agents, contractors, lenders…">
+        </label>
+        <label class="wide">Alleged basis and issues
+          <textarea id="f-basis" placeholder="Protected class and alleged discriminatory conduct"></textarea>
+        </label>
+        <label class="wide">Investigator notes
+          <textarea id="f-notes" placeholder="Anything else relevant to respondent identification"></textarea>
+        </label>
+      </div>
+      <div class="form-actions">
+        <button class="primary inline" type="submit" id="run-btn">Run respondent report</button>
+        <button class="secondary" type="button" id="sample-btn">Load sample case</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel hidden" id="chat-panel">
+    <h2>Report</h2>
+    <div id="error-area"></div>
+    <div class="chat" id="chat"></div>
+
+    <div id="followup-area" class="hidden">
+      <p class="followup-label" style="margin-top:18px">Generate a draft records-request email to an agency:</p>
+      <div class="chips" id="agency-chips"></div>
+      <div class="followup">
+        <input type="text" id="followup-input" placeholder="Or ask FHAssistant anything about this case…">
+        <button class="primary inline" type="button" id="send-btn">Send</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<p class="page-foot">Demonstration environment — all case data is fictional; simulated research results are
+   labeled as such. Do not enter real case information.</p>
+
+<div id="setup-backdrop" class="modal-backdrop hidden">
+  <div class="modal">
+    <h2>Demo setup</h2>
+    <p>Paste the demo access key you were given for the training session. It is stored only in this
+       browser and sent only to the AI service when you run a report — never to this website's host.</p>
+    <label>Access key
+      <input type="password" id="setup-key" placeholder="sk-ant-…">
+    </label>
+    <div class="form-actions">
+      <button class="primary inline" type="button" onclick="saveSetup()">Save</button>
+      <button class="secondary" type="button" onclick="closeSetup()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="respondents.js"></script>
+</body>
+</html>
