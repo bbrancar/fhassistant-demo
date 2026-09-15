@@ -4,9 +4,18 @@ Demo site for the FHAssistant training session: a non-functional sign-in
 screen, a landing page listing the six modules, and a working
 **Identify Respondents and Key Records Collection** module backed by Claude.
 
+## Demo sign-in
+
+- Email: `demo@fhassistant.org`
+- Password: `FHAdemo2026`
+
+The check happens only in the page's JavaScript — it is a stage prop, not real
+authentication (the credentials are visible in the page source), and nothing
+is stored or transmitted.
+
 ## Pages
 
-- `index.html` — sign-in prop; validates, stores, and transmits nothing.
+- `index.html` — sign-in prop; accepts only the demo profile above.
 - `home.html` — landing page. Only the Respondents module is live; the other
   five cards show a "not enabled in this demonstration" notice.
 - `respondents.html` + `respondents.js` — the live module: intake form →

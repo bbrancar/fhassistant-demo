@@ -22,6 +22,7 @@
       <p class="tagline">For fair housing advocates, by fair housing advocates</p>
     </div>
     <form id="login-form" novalidate autocomplete="off">
+      <p class="login-error hidden" id="login-error">Invalid email or password.</p>
       <label>Email address
         <input type="text" name="email" placeholder="you@agency.gov">
       </label>
@@ -38,10 +39,20 @@
   <p class="foot">Demonstration environment — do not enter real credentials or case information.</p>
 </main>
 <script>
-  // Demo build: nothing is validated, stored, or transmitted.
+  // Demo build: the check below is a stage prop, enforced only in this page's
+  // JavaScript. Nothing is stored or transmitted.
+  var DEMO_EMAIL = "demo@fhassistant.org";
+  var DEMO_PASSWORD = "FHAdemo2026";
+
   document.getElementById('login-form').addEventListener('submit', function (e) {
     e.preventDefault();
-    window.location.href = 'home.html';
+    var email = this.email.value.trim().toLowerCase();
+    var password = this.password.value;
+    if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
+      window.location.href = 'home.html';
+    } else {
+      document.getElementById('login-error').classList.remove('hidden');
+    }
   });
 </script>
 </body>
